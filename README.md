@@ -26,6 +26,7 @@ HDS 的核心理念是将人工智能系统视为一个具有"虚拟生理—认
 ### 快速开始
 
 - [完整文档目录](docs/INDEX.md) - 查看所有技术文档
+- [写作规范（参数脱敏与版式）](docs/STYLE.md) - 白皮书化排版与脱敏规则
 - [引言与理论基础](docs/01-introduction.md) - 了解 HDS 的科学背景
 - [系统架构总览](docs/02-system-architecture.md) - 掌握整体设计
 
@@ -64,9 +65,13 @@ HDS 遵循生物闭环逻辑：
 
 ## 核心概念
 
+> [!IMPORTANT]
+> **参数脱敏原则（强制）**：本文档与 `docs/` 不展示任何来自代码/配置的真实参数值；  
+> 数学公式与表格只使用符号变量表示可调参数与边界（详见 `docs/STYLE.md`）。
+
 ### 内驱力系统（Homeostasis）
 
-内驱力是生物体维持生存的基本需求驱动。在 HDS 中，内驱力变量归一化到区间 $[0,1]$，采用软饱和而非硬截断，避免贴边后策略失真。
+内驱力是生物体维持生存的基本需求驱动。在 HDS 中，内驱力变量被约束在有界区间 $[H_{\min}, H_{\max}]$，采用软饱和而非硬截断，避免贴边后策略失真。
 
 **核心内驱力变量**：
 
@@ -95,7 +100,7 @@ $$
 
 ### 行为向量（Behavior Vector）
 
-行为向量是 HDS 与 LLM 之间的稳定中间层，$B \in [0,1]^8$：
+行为向量是 HDS 与 LLM 之间的稳定中间层，$B \in [B_{\min}, B_{\max}]^k$：
 
 | 维度 | 名称 | 含义 |
 | :--- | :--- | :--- |
@@ -194,9 +199,9 @@ final hds = await HDSService.init(
 ```dart
 // 观测事件
 hds.observe(HDSEvent.fromPerception(
-  offensiveness: 3,
-  valence: 0.5,
-  arousal: 0.7,
+  offensiveness: offensivenessScore,
+  valence: valenceScore,
+  arousal: arousalScore,
 ));
 
 // 编译控制输出
@@ -204,6 +209,10 @@ final bundle = hds.compile();
 final promptInjection = bundle.promptInjection;
 final sampling = bundle.sampling;
 ```
+
+- `offensivenessScore`：观测到的冒犯/威胁强度（取值域用符号变量表示）
+- `valenceScore`：观测到的效价（取值域用符号变量表示）
+- `arousalScore`：观测到的唤醒度（取值域用符号变量表示）
 
 ---
 

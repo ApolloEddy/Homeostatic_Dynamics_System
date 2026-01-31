@@ -118,65 +118,69 @@ HDS 服务初始化流程包括以下步骤：
 # hds_settings.yaml
 
 homeostatic:
-  social_decay_rate: $d_s$
-  energy_recover_rate: $r_e$
-  energy_task_cost_base: $c_e$
+  social_decay_rate: <LAMBDA_SOCIAL>
+  energy_recover_rate: <RHO_ENERGY>
+  energy_task_cost_base: <KAPPA_TASK>
 
 neuromodulator:
   baseline:
-    da: $\mu_{DA}$
-    ne: $\mu_{NE}$
-    ht: $\mu_{5HT}$
+    da: <MU_DA>
+    ne: <MU_NE>
+    ht: <MU_5HT>
   theta:
-    da: $\theta_{DA}$
-    ne: $\theta_{NE}$
-    ht: $\theta_{5HT}$
+    da: <THETA_DA>
+    ne: <THETA_NE>
+    ht: <THETA_5HT>
   sigma:
-    da: $\sigma_{DA}$
-    ne: $\sigma_{NE}$
-    ht: $\sigma_{5HT}$
+    da: <SIGMA_DA>
+    ne: <SIGMA_NE>
+    ht: <SIGMA_5HT>
 
 stimulus:
-  scale: $s_{stimulus}$
-  max: $I_{max}$
-  offense_to_ne: $w_{offense}$
-  valence_to_da: $w_{valence}$
-  boundary_ht_penalty: $p_{boundary}$
+  scale: <S_STIM>
+  max: <I_MAX>
+  offense_to_ne: <OFFENSE_TO_NE_SCALE>
+  valence_to_da: <VALENCE_TO_DA_SCALE>
+  boundary_ht_penalty: <BOUNDARY_HT_PENALTY>
 
 sampling:
-  temperature_min: $T_{min}$
-  temperature_max: $T_{max}$
-  top_p_min: $p_{min}$
-  top_p_max: $p_{max}$
+  temperature_min: <T_MIN>
+  temperature_max: <T_MAX>
+  top_p_min: <P_MIN>
+  top_p_max: <P_MAX>
 
 behavior_mapping:
   initiative:
-    high: $b_{1,high}$
-    low: $b_{1,low}$
+    high: <B_INITIATIVE_MAX>
+    low: <B_INITIATIVE_MIN>
   warmth:
-    high: $b_{2,high}$
-    low: $b_{2,low}$
+    high: <B_WARMTH_MAX>
+    low: <B_WARMTH_MIN>
   patience:
-    low: $b_{3,low}$
-    high: $b_{3,high}$
+    low: <B_PATIENCE_MIN>
+    high: <B_PATIENCE_MAX>
   verbosity:
-    low: $b_{4,low}$
-    high: $b_{4,high}$
+    low: <B_VERBOSITY_MIN>
+    high: <B_VERBOSITY_MAX>
   directness:
-    low: $b_{5,low}$
-    high: $b_{5,high}$
+    low: <B_DIRECTNESS_MIN>
+    high: <B_DIRECTNESS_MAX>
   defensiveness:
-    low: $b_{6,low}$
-    high: $b_{6,high}$
+    low: <B_DEFENSIVENESS_MIN>
+    high: <B_DEFENSIVENESS_MAX>
   curiosity:
-    low: $b_{7,low}$
-    high: $b_{7,high}$
+    low: <B_CURIOSITY_MIN>
+    high: <B_CURIOSITY_MAX>
   boundary_strength:
-    high: $b_{8,high}$
-    low: $b_{8,low}$
+    high: <B_BOUNDARY_MAX>
+    low: <B_BOUNDARY_MIN>
 ```
 
 ### 3.2 参数说明
+
+> [!NOTE]
+> 上述 `<...>` 仅为占位符 token，不代表任何真实默认值。  
+> 统一符号与约束定义见：`docs/appendix/parameter-symbols.md`。
 
 #### 3.2.1 内驱力参数
 

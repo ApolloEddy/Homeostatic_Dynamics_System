@@ -242,13 +242,14 @@ $$
 {
   "category": "relation",
   "content": "用户不喜欢被问及个人隐私",
-  "importance": $w_{importance\_example}$,
-  "timestamp": "2026-01-31T00:00:00Z"
+  "importance": "<IMPORTANCE>",
+  "timestamp": "<ISO8601_TIMESTAMP>"
 }
 ```
 
 **参数解释**：
-- $w_{importance\_example}$：重要性示例值
+- `<IMPORTANCE>`：重要性/显著性占位符（有界；不展示真实数值）
+- `<ISO8601_TIMESTAMP>`：时间戳占位符（示意格式）
 
 #### 4.3.2 关系演化
 
@@ -288,7 +289,7 @@ $$
 X_{t+\Delta t} = X_t + \theta(\mu - X_t)\Delta t + \sigma \sqrt{\Delta t} \cdot \epsilon
 $$
 
-其中 $\epsilon \sim \mathcal{N}(0,1)$ 是标准正态随机变量。
+其中 $\epsilon \sim \mathcal{N}(\mu_{\epsilon}, \sigma_{\epsilon}^{2})$ 是高斯随机变量（分布参数用符号表示）。
 
 ### 5.2 稳定性理论
 
@@ -436,21 +437,24 @@ class BehaviorVector {
 映射用于存储键值对：
 
 ```dart
-Map<String, double> stateSnapshot = {
-  'hSocial': $w_{hSocial\_example}$,
-  'hEnergy': $w_{hEnergy\_example}$,
-  'da': $w_{da\_example}$,
-  'ne': $w_{ne\_example}$,
-  'ht': $w_{ht\_example}$,
+final stateSnapshot = <String, double>{
+  'hSocial': hSocial,
+  'hEnergy': hEnergy,
+  'da': da,
+  'ne': ne,
+  'ht': ht,
 };
 ```
 
 **参数解释**：
-- $w_{hSocial\_example}$：社交饱腹感示例值
-- $w_{hEnergy\_example}$：认知能量示例值
-- $w_{da\_example}$：多巴胺示例值
-- $w_{ne\_example}$：去甲肾上腺素示例值
-- $w_{ht\_example}$：血清素示例值
+- `hSocial`：\(H_{\mathrm{social}}(t)\)，社交饱腹感（有界）
+- `hEnergy`：\(H_{\mathrm{energy}}(t)\)，认知能量（有界）
+- `da`：\(N_{\mathrm{DA}}(t)\)，多巴胺通道状态（有界）
+- `ne`：\(N_{\mathrm{NE}}(t)\)，去甲肾上腺素通道状态（有界）
+- `ht`：\(N_{\mathrm{5HT}}(t)\)，血清素通道状态（有界）
+
+> [!NOTE]
+> 代码块展示规范见：`docs/STYLE.md`（代码块内不写 LaTeX 占位符）。
 
 #### 6.3.3 队列
 

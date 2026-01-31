@@ -1,4 +1,4 @@
-# 系统架构总览
+﻿# 系统架构总览
 
 > **Homeostatic Dynamics System** 的整体架构设计
 
@@ -122,7 +122,7 @@ HDS 遵循生物闭环逻辑：
 ### 3.1 数据流图
 
 ```mermaid
-graph LR
+graph TD
     User([用户输入]) --> L1[L1 数字生理循环]
     L1 --> HDS{HDS 核心}
     
@@ -138,7 +138,6 @@ graph LR
     
     Response --> Mem
     L1 <--> Mem
-    User --> L1
     
     style HDS fill:#f9f,stroke:#333,stroke-width:2px
     style Mem fill:#ccf,stroke:#333,stroke-width:2px
@@ -225,35 +224,35 @@ Future<void> consolidate({DateTime? since, DateTime? until})
 
 ```json
 {
-  "promptInjection": "<hds_state>initiative=$w_{initiative\_example}$ warmth=$w_{warmth\_example}$ ...</hds_state>",
+  "promptInjection": "<hds_state>...</hds_state>",
   "sampling": {
-    "temperature": $w_{temperature\_example}$,
-    "topP": $w_{topP\_example}$,
-    "maxTokens": $w_{maxTokens\_example}$
+    "temperature": "<T>",
+    "topP": "<P>",
+    "maxTokens": "<M>"
   },
   "retrievalBias": {
-    "factMemory": $w_{factMemory\_example}$,
-    "relationMemory": $w_{relationMemory\_example}$,
-    "affectMemory": $w_{affectMemory\_example}$,
-    "styleMemory": $w_{styleMemory\_example}$
+    "factMemory": "<w_fact>",
+    "relationMemory": "<w_relation>",
+    "affectMemory": "<w_affect>",
+    "styleMemory": "<w_style>"
   },
   "behavior": {
-    "initiative": $w_{initiative\_example}$,
-    "warmth": $w_{warmth\_example}$,
-    "patience": $w_{patience\_example}$,
-    "verbosity": $w_{verbosity\_example}$,
-    "directness": $w_{directness\_example}$,
-    "defensiveness": $w_{defensiveness\_example}$,
-    "boundaryStrength": $w_{boundaryStrength\_example}$
+    "initiative": "<b_initiative>",
+    "warmth": "<b_warmth>",
+    "patience": "<b_patience>",
+    "verbosity": "<b_verbosity>",
+    "directness": "<b_directness>",
+    "defensiveness": "<b_defensiveness>",
+    "boundaryStrength": "<b_boundary>"
   },
   "styleGuidance": "concise, assertive, fewer questions",
   "debug": {
     "stateSnapshot": {
-      "hSocial": $w_{hSocial\_example}$,
-      "hEnergy": $w_{hEnergy\_example}$,
-      "da": $w_{da\_example}$,
-      "ne": $w_{ne\_example}$,
-      "ht": $w_{ht\_example}$
+      "hSocial": "<H_social>",
+      "hEnergy": "<H_energy>",
+      "da": "<N_DA>",
+      "ne": "<N_NE>",
+      "ht": "<N_5HT>"
     },
     "reasons": ["low_energy", "high_stress"]
   }
@@ -261,25 +260,13 @@ Future<void> consolidate({DateTime? since, DateTime? until})
 ```
 
 **参数解释**：
-- $w_{initiative\_example}$：主动性示例值
-- $w_{warmth\_example}$：温暖度示例值
-- $w_{temperature\_example}$：温度示例值
-- $w_{topP\_example}$：Top-P 示例值
-- $w_{maxTokens\_example}$：最大 Token 数示例值
-- $w_{factMemory\_example}$：事实记忆偏置示例值
-- $w_{relationMemory\_example}$：关系记忆偏置示例值
-- $w_{affectMemory\_example}$：情绪记忆偏置示例值
-- $w_{styleMemory\_example}$：风格记忆偏置示例值
-- $w_{patience\_example}$：耐心度示例值
-- $w_{verbosity\_example}$：话量示例值
-- $w_{directness\_example}$：直率示例值
-- $w_{defensiveness\_example}$：防御性示例值
-- $w_{boundaryStrength\_example}$：边界力度示例值
-- $w_{hSocial\_example}$：社交饱腹感示例值
-- $w_{hEnergy\_example}$：认知能量示例值
-- $w_{da\_example}$：多巴胺示例值
-- $w_{ne\_example}$：去甲肾上腺素示例值
-- $w_{ht\_example}$：血清素示例值
+- `<T>/<P>/<M>`：采样控制量（分别对应 \(T_t,P_t,M_t\)，均为有界变量）
+- `<w_fact>/<w_relation>/<w_affect>/<w_style>`：检索偏置权重（有界；不改变事实内容）
+- `<b_*>`：行为向量分量（对应 \(\mathbf{b}_t\) 的各维度）
+- `<H_social>/<H_energy>/<N_DA>/<N_NE>/<N_5HT>`：状态快照（稳态 + 神经调制）
+
+> [!NOTE]
+> 如需查看符号与约束的统一定义，见 `docs/appendix/parameter-symbols.md`。
 
 ---
 
@@ -293,79 +280,66 @@ HDS 使用 YAML 配置文件，支持热加载：
 # hds_settings.yaml
 
 homeostatic:
-  social_decay_rate: $d_s$
-  energy_recover_rate: $r_e$
-  energy_task_cost_base: $c_e$
+  social_decay_rate: <LAMBDA_SOCIAL>
+  energy_recover_rate: <RHO_ENERGY>
+  energy_task_cost_base: <KAPPA_TASK>
 
 neuromodulator:
   baseline:
-    da: $\mu_{DA}$
-    ne: $\mu_{NE}$
-    ht: $\mu_{5HT}$
+    da: <MU_DA>
+    ne: <MU_NE>
+    ht: <MU_5HT>
   theta:
-    da: $\theta_{DA}$
-    ne: $\theta_{NE}$
-    ht: $\theta_{5HT}$
+    da: <THETA_DA>
+    ne: <THETA_NE>
+    ht: <THETA_5HT>
   sigma:
-    da: $\sigma_{DA}$
-    ne: $\sigma_{NE}$
-    ht: $\sigma_{5HT}$
+    da: <SIGMA_DA>
+    ne: <SIGMA_NE>
+    ht: <SIGMA_5HT>
 
 stimulus:
-  scale: $s_{stimulus}$
-  max: $I_{max}$
-  offense_to_ne: $w_{offense}$
-  valence_to_da: $w_{valence}$
-  boundary_ht_penalty: $p_{boundary}$
+  scale: <S_STIM>
+  max: <I_MAX>
+  offense_to_ne: <OFFENSE_TO_NE_SCALE>
+  valence_to_da: <VALENCE_TO_DA_SCALE>
+  boundary_ht_penalty: <BOUNDARY_HT_PENALTY>
 
 sampling:
-  temperature_min: $T_{min}$
-  temperature_max: $T_{max}$
-  top_p_min: $p_{min}$
-  top_p_max: $p_{max}$
+  temperature_min: <T_MIN>
+  temperature_max: <T_MAX>
+  top_p_min: <P_MIN>
+  top_p_max: <P_MAX>
 
 behavior_mapping:
   initiative:
-    high: $b_{1,high}$
-    low: $b_{1,low}$
+    high: <B_INITIATIVE_MAX>
+    low: <B_INITIATIVE_MIN>
   warmth:
-    high: $b_{2,high}$
-    low: $b_{2,low}$
+    high: <B_WARMTH_MAX>
+    low: <B_WARMTH_MIN>
   patience:
-    low: $b_{3,low}$
-    high: $b_{3,high}$
+    low: <B_PATIENCE_MIN>
+    high: <B_PATIENCE_MAX>
   verbosity:
-    low: $b_{4,low}$
-    high: $b_{4,high}$
+    low: <B_VERBOSITY_MIN>
+    high: <B_VERBOSITY_MAX>
   directness:
-    low: $b_{5,low}$
-    high: $b_{5,high}$
+    low: <B_DIRECTNESS_MIN>
+    high: <B_DIRECTNESS_MAX>
   defensiveness:
-    low: $b_{6,low}$
-    high: $b_{6,high}$
+    low: <B_DEFENSIVENESS_MIN>
+    high: <B_DEFENSIVENESS_MAX>
   curiosity:
-    low: $b_{7,low}$
-    high: $b_{7,high}$
+    low: <B_CURIOSITY_MIN>
+    high: <B_CURIOSITY_MAX>
   boundary_strength:
-    high: $b_{8,high}$
-    low: $b_{8,low}$
+    high: <B_BOUNDARY_MAX>
+    low: <B_BOUNDARY_MIN>
 ```
 
 **参数解释**：
-- $d_s$：社交需求衰减率（每小时）
-- $r_e$：认知能量恢复率（每小时）
-- $c_e$：基础任务消耗
-- $\mu_{DA}$、$\mu_{NE}$、$\mu_{5HT}$：神经递质基线水平
-- $\theta_{DA}$、$\theta_{NE}$、$\theta_{5HT}$：神经递质回归速率
-- $\sigma_{DA}$、$\sigma_{NE}$、$\sigma_{5HT}$：神经递质噪声强度
-- $s_{stimulus}$：刺激归一化尺度
-- $I_{max}$：刺激最大幅度
-- $w_{offense}$：冒犯性到 NE 的映射权重
-- $w_{valence}$：效价到 DA 的映射权重
-- $p_{boundary}$：边界设定的 5HT 惩罚
-- $T_{min}$、$T_{max}$：温度采样上下限
-- $p_{min}$、$p_{max}$：top_p 采样上下限
-- $b_{i,high}$、$b_{i,low}$：行为向量第 $i$ 维的上下限
+- 上述 `<...>` 为占位符 token（不展示真实数值），其符号语义与约束见：`docs/appendix/parameter-symbols.md`。
 
 ### 6.2 运行时配置
 
@@ -397,21 +371,21 @@ HDS 提供以下监控指标：
 
 | 指标 | 含义 | 阈值 |
 | :--- | :--- | :--- |
-| **状态饱和率** | H、N 贴边占比 | $> w_{saturation\_warning}$ 需要调参 |
+| **状态饱和率** | H、N 贴边占比 | $> \tau_{\mathrm{sat,warning}}$ 需要调参 |
 | **恢复半衰期** | 从极端状态回到中性需要多少 tick | - |
 | **few-shot 注入频率** | few-shot 注入的频率 | - |
-| **few-shot token 成本** | few-shot 注入的 token 成本 | $\le w_{token\_budget}$ tokens |
+| **few-shot token 成本** | few-shot 注入的 token 成本 | $\le B_{\mathrm{inject}}$ |
 | **重复率** | n-gram 重复、主题回环频率 | - |
 | **事实错误率** | 抽样评测的事实错误率 | - |
 | **拒绝率** | 拒绝复杂任务的频率 | - |
 | **用户中断率** | 用户中断对话的频率 | - |
-| **负向核心记忆占比** | threat 事件入 AffectMemory 的占比 | $> w_{threat\_warning}$ 过高说明 threat 管线过敏 |
+| **负向核心记忆占比** | threat 事件入 AffectMemory 的占比 | $> \tau_{\mathrm{threat,warning}}$ 过高说明 threat 管线过敏 |
 
 **参数解释**：
-- $w_{saturation\_warning}$：饱和率警告阈值，默认值 $w_{sw\_default}$
-- $w_{saturation\_critical}$：饱和率严重阈值，默认值 $w_{sc\_default}$
-- $w_{token\_budget}$：token 预算，默认值 $w_{tb\_default}$
-- $w_{threat\_warning}$：威胁占比警告阈值，默认值 $w_{tw\_default}$
+- $\tau_{\mathrm{sat,warning}}$：饱和率警告阈值（符号化；不展示真实数值）
+- $\tau_{\mathrm{sat,critical}}$：饱和率严重阈值（符号化；不展示真实数值）
+- $B_{\mathrm{inject}}$：注入预算（符号化；不展示真实数值）
+- $\tau_{\mathrm{threat,warning}}$：威胁占比警告阈值（符号化；不展示真实数值）
 
 ### 7.2 调试信息
 
@@ -420,48 +394,33 @@ HDS 提供丰富的调试信息，使用伪变量表示示例值：
 ```json
 {
   "stateSnapshot": {
-    "hSocial": $w_{hSocial\_example}$,
-    "hEnergy": $w_{hEnergy\_example}$,
-    "da": $w_{da\_example}$,
-    "ne": $w_{ne\_example}$,
-    "ht": $w_{ht\_example}$
+    "hSocial": "<H_social>",
+    "hEnergy": "<H_energy>",
+    "da": "<N_DA>",
+    "ne": "<N_NE>",
+    "ht": "<N_5HT>"
   },
   "reasons": ["low_energy", "high_stress"],
   "stimulus": {
-    "da": $w_{I\_DA\_example}$,
-    "ne": $w_{I\_NE\_example}$,
-    "ht": $w_{I\_5HT\_example}$
+    "da": "<I_DA>",
+    "ne": "<I_NE>",
+    "ht": "<I_5HT>"
   },
   "behaviorVector": {
-    "initiative": $w_{initiative\_example}$,
-    "warmth": $w_{warmth\_example}$,
-    "patience": $w_{patience\_example}$,
-    "verbosity": $w_{verbosity\_example}$,
-    "directness": $w_{directness\_example}$,
-    "defensiveness": $w_{defensiveness\_example}$,
-    "curiosity": $w_{curiosity\_example}$,
-    "boundaryStrength": $w_{boundaryStrength\_example}$
+    "initiative": "<b_initiative>",
+    "warmth": "<b_warmth>",
+    "patience": "<b_patience>",
+    "verbosity": "<b_verbosity>",
+    "directness": "<b_directness>",
+    "defensiveness": "<b_defensiveness>",
+    "curiosity": "<b_curiosity>",
+    "boundaryStrength": "<b_boundary>"
   }
 }
 ```
 
-**参数解释**：
-- $w_{hSocial\_example}$：社交饱腹感示例值
-- $w_{hEnergy\_example}$：认知能量示例值
-- $w_{da\_example}$：多巴胺示例值
-- $w_{ne\_example}$：去甲肾上腺素示例值
-- $w_{ht\_example}$：血清素示例值
-- $w_{I\_DA\_example}$：多巴胺刺激示例值
-- $w_{I\_NE\_example}$：去甲肾上腺素刺激示例值
-- $w_{I\_5HT\_example}$：血清素刺激示例值
-- $w_{initiative\_example}$：主动性示例值
-- $w_{warmth\_example}$：温暖度示例值
-- $w_{patience\_example}$：耐心度示例值
-- $w_{verbosity\_example}$：话量示例值
-- $w_{directness\_example}$：直率示例值
-- $w_{defensiveness\_example}$：防御性示例值
-- $w_{curiosity\_example}$：好奇心示例值
-- $w_{boundaryStrength\_example}$：边界力度示例值
+> [!NOTE]
+> 上述占位符的符号定义与约束见：`docs/appendix/parameter-symbols.md`。
 
 ### 7.3 调参顺序
 
@@ -509,64 +468,24 @@ HDS 提供丰富的调试信息，使用伪变量表示示例值：
 
 ### 8.3 状态演化
 
-```
-初始状态：
-  H_social = $w_{h\_s0}$, H_energy = $w_{h\_e0}$
-  DA = $w_{p\_d0}$, NE = $w_{p\_n0}$, 5HT = $w_{p\_h0}$
-```
-**参数解释**：
-- $w_{h\_s0}$：初始社交饱腹感示例值
-- $w_{h\_e0}$：初始认知能量示例值
-- $w_{p\_d0}$：初始多巴胺示例值
-- $w_{p\_n0}$：初始去甲肾上腺素示例值
-- $w_{p\_h0}$：初始血清素示例值
-```
-事件刺激：
-  I_DA = $w_{I\_DA\_example}$, I_NE = $w_{I\_NE\_example}$, I_5HT = $w_{I\_5HT\_example}$
+```text
+初始状态（占位符）：
+  H_social = <H_social>, H_energy = <H_energy>
+  N_DA = <N_DA>, N_NE = <N_NE>, N_5HT = <N_5HT>
+
+事件刺激（占位符）：
+  I_DA = <I_DA>, I_NE = <I_NE>, I_5HT = <I_5HT>
+
+L2 行为向量（占位符）：
+  b = (<b_initiative>, <b_warmth>, <b_patience>, <b_verbosity>, <b_directness>, <b_defensiveness>, <b_curiosity>, <b_boundary>)
+
+编译输出（结构化）：
+  promptInjection = "<hds_state>...</hds_state>"
+  sampling = { temperature: <T>, topP: <P>, maxTokens: <M> }
 ```
 
-**参数解释**：
-- $w_{I\_DA\_example}$：多巴胺刺激示例值
-- $w_{I\_NE\_example}$：去甲肾上腺素刺激示例值
-- $w_{I\_5HT\_example}$：血清素刺激示例值
-
-```
-L1 更新后：
-  H_social = $w_{h\_s1}$, H_energy = $w_{h\_e1}$
-  DA = $w_{p\_d1}$, NE = $w_{p\_n1}$, 5HT = $w_{p\_h1}$
-```
-
-**参数解释**：
-- $w_{h\_s1}$：更新后社交饱腹感示例值
-- $w_{h\_e1}$：更新后认知能量示例值
-- $w_{p\_d1}$：更新后多巴胺示例值
-- $w_{p\_n1}$：更新后去甲肾上腺素示例值
-- $w_{p\_h1}$：更新后血清素示例值
-
-```
-L2 行为向量：
-  initiative = $w_{initiative\_example}$, warmth = $w_{warmth\_example}$
-  patience = $w_{patience\_example}$, verbosity = $w_{verbosity\_example}$
-  directness = $w_{directness\_example}$, defensiveness = $w_{defensiveness\_example}$
-  curiosity = $w_{curiosity\_example}$, boundaryStrength = $w_{boundaryStrength\_example}$
-```
-
-**参数解释**：
-- $w_{initiative\_example}$：主动性示例值
-- $w_{warmth\_example}$：温暖度示例值
-- $w_{patience\_example}$：耐心度示例值
-- $w_{verbosity\_example}$：话量示例值
-- $w_{directness\_example}$：直率示例值
-- $w_{defensiveness\_example}$：防御性示例值
-- $w_{curiosity\_example}$：好奇心示例值
-- $w_{boundaryStrength\_example}$：边界力度示例值
-
-```
-编译输出：
-  promptInjection = "<hds_state>initiative=$w_{initiative\_example}$ warmth=$w_{warmth\_example}$ ...</hds_state>"
-  styleGuidance = "concise, assertive, fewer questions"
-  sampling = { temperature: $w_{temperature\_example}$, topP: $w_{topP\_example}$, maxTokens: $w_{maxTokens\_example}$ }
-```
+> [!NOTE]
+> 占位符符号与约束见：`docs/appendix/parameter-symbols.md`；ControlBundle 的字段结构见本文 5.3。
 
 ---
 
@@ -618,3 +537,4 @@ HDS 的架构设计遵循以下核心原则：
 ---
 
 **[返回目录](./INDEX.md)** | **[上一篇：引言与理论基础](./01-introduction.md)** | **[下一篇：L1 数字生理循环](./03-physiological-loop.md)**
+

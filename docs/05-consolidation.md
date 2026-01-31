@@ -1,4 +1,4 @@
-# L3 记忆巩固
+﻿# L3 记忆巩固
 
 > **Homeostatic Dynamics System** 的第三层——长时序人格固化
 
@@ -48,56 +48,41 @@ L3 的触发条件：
 
 ```json
 {
-  "ts": "$timestamp\_example$",
+  "ts": "<ISO8601_TIMESTAMP>",
   "user": "用户输入内容",
   "assistant": "系统响应内容",
   "state": {
-    "hSocial": $w_{h\_social\_example}$,
-    "hEnergy": $w_{h\_energy\_example}$,
-    "da": $w_{da\_example}$,
-    "ne": $w_{ne\_example}$,
-    "ht": $w_{ht\_example}$
+    "hSocial": "<H_social>",
+    "hEnergy": "<H_energy>",
+    "da": "<N_DA>",
+    "ne": "<N_NE>",
+    "ht": "<N_5HT>"
   },
   "behavior": {
-    "initiative": $w_{initiative\_example}$,
-    "warmth": $w_{warmth\_example}$,
-    "patience": $w_{patience\_example}$,
-    "verbosity": $w_{verbosity\_example}$,
-    "directness": $w_{directness\_example}$,
-    "defensiveness": $w_{defensiveness\_example}$,
-    "curiosity": $w_{curiosity\_example}$,
-    "boundaryStrength": $w_{boundary\_example}$
+    "initiative": "<b_initiative>",
+    "warmth": "<b_warmth>",
+    "patience": "<b_patience>",
+    "verbosity": "<b_verbosity>",
+    "directness": "<b_directness>",
+    "defensiveness": "<b_defensiveness>",
+    "curiosity": "<b_curiosity>",
+    "boundaryStrength": "<b_boundary>"
   },
   "events": ["criticism", "threat_like", "high_surprise"],
   "rpe": {
-    "reward": $w_{rpe\_reward\_example}$,
-    "threat": $w_{rpe\_threat\_example}$
+    "reward": "<RPE_reward>",
+    "threat": "<RPE_threat>"
   },
   "toolUsage": {
     "retrieval": true,
     "tools": ["tool1", "tool2"],
-    "tokenOut": $w_{token\_out\_example}$
+    "tokenOut": "<TOKEN_OUT>"
   }
 }
 ```
 
-**参数解释**：
-- $w_{h\_social\_example}$：社交饱腹感示例值
-- $w_{h\_energy\_example}$：认知能量示例值
-- $w_{da\_example}$：多巴胺示例值
-- $w_{ne\_example}$：去甲肾上腺素示例值
-- $w_{ht\_example}$：血清素示例值
-- $w_{initiative\_example}$：主动性示例值
-- $w_{warmth\_example}$：温暖度示例值
-- $w_{patience\_example}$：耐心度示例值
-- $w_{verbosity\_example}$：话量示例值
-- $w_{directness\_example}$：直率示例值
-- $w_{defensiveness\_example}$：防御性示例值
-- $w_{curiosity\_example}$：好奇心示例值
-- $w_{boundary\_example}$：边界力度示例值
-- $w_{rpe\_reward\_example}$：奖赏 RPE 示例值
-- $w_{rpe\_threat\_example}$：威胁 RPE 示例值
-- $w_{token\_out\_example}$：输出 token 数示例值
+> [!NOTE]
+> 占位符符号与约束见：`docs/appendix/parameter-symbols.md`；代码块展示规范见：`docs/STYLE.md`。
 
 ### 2.3 字段说明
 
@@ -145,30 +130,22 @@ L3 的触发条件：
   "id": "uuid",
   "category": "relation",
   "content": "用户不喜欢被问及个人隐私",
-  "importance": $w_{importance\_example}$,
-  "timestamp": "$timestamp\_example$",
+  "importance": "<IMPORTANCE>",
+  "timestamp": "<ISO8601_TIMESTAMP>",
   "stateSnapshot": {
-    "hSocial": $w_{h\_social\_example}$,
-    "hEnergy": $w_{h\_energy\_example}$,
-    "da": $w_{da\_example}$,
-    "ne": $w_{ne\_example}$,
-    "ht": $w_{ht\_example}$
+    "hSocial": "<H_social>",
+    "hEnergy": "<H_energy>",
+    "da": "<N_DA>",
+    "ne": "<N_NE>",
+    "ht": "<N_5HT>"
   },
-  "rpe": $w_{rpe\_example}$,
-  "embedding": [$w_{emb\_1}$, $w_{emb\_2}$, $w_{emb\_3}$, ...]
+  "rpe": "<RPE>",
+  "embedding": "<EMBEDDING_VECTOR>"
 }
 ```
 
-**参数解释**：
-- $w_{importance\_example}$：重要性示例值
-- $w_{timestamp\_example}$：时间戳示例值
-- $w_{h\_social\_example}$：社交饱腹感示例值
-- $w_{h\_energy\_example}$：认知能量示例值
-- $w_{da\_example}$：多巴胺示例值
-- $w_{ne\_example}$：去甲肾上腺素示例值
-- $w_{ht\_example}$：血清素示例值
-- $w_{rpe\_example}$：RPE 示例值
-- $w_{emb\_1}$、$w_{emb\_2}$、$w_{emb\_3}$：嵌入向量示例值
+> [!NOTE]
+> 字段含义与符号约束见：`docs/appendix/parameter-symbols.md`。
 
 ### 3.4 字段说明
 
@@ -177,7 +154,7 @@ L3 的触发条件：
 | `id` | String | 记忆唯一标识 |
 | `category` | String | 记忆类别 |
 | `content` | String | 记忆内容 |
-| `importance` | Number | 记忆重要性 $[0,1]$ |
+| `importance` | Number | 记忆重要性（有界：$[I_{\min}, I_{\max}]$） |
 | `timestamp` | String | 记忆时间戳 |
 | `stateSnapshot` | Object | 当时状态快照 |
 | `rpe` | Number | 奖赏预测误差 |
@@ -202,12 +179,12 @@ $$
 $$
 
 其中：
-- $w_{DA,low}$：DA 低阈值，默认值 $w_{w_{DAl}}$
-- $w_{NE,high}$：NE 高阈值，默认值 $w_{w_{NEh}}$
+- $\tau_{\mathrm{da,low}}$：DA 低阈值（符号化）
+- $\tau_{\mathrm{ne,high}}$：NE 高阈值（符号化）
 
 **参数解释**：
-- $w_{DA,low}$：DA 低阈值，控制何时注入 few-shot
-- $w_{NE,high}$：NE 高阈值，控制何时注入 few-shot
+- $\tau_{\mathrm{da,low}}$：控制何时注入 few-shot
+- $\tau_{\mathrm{ne,high}}$：控制何时注入 few-shot
 
 #### 4.2.2 注入数量
 
@@ -218,7 +195,7 @@ n_{fewshot} = \min(n_{max}, n_{available})
 $$
 
 其中：
-- $n_{max}$：最大注入数量，默认值 $w_{n_{max}}$
+- $n_{max}$：最大注入数量（不展示真实数值）
 - $n_{available}$：可用记忆数量
 
 **参数解释**：
@@ -233,7 +210,7 @@ tokens_{fewshot} \le w_{token\_budget}
 $$
 
 其中：
-- $w_{token\_budget}$：注入 token 预算，默认值 $w_{t_b}$
+- $w_{token\_budget}$：注入 token 预算（不展示真实数值）
 
 **参数解释**：
 - $w_{token\_budget}$：注入 token 预算，控制 few-shot 的 token 成本
@@ -305,7 +282,7 @@ $$
 
 其中：
 - $n$：当日交互次数
-- $w_{high\_impact}$：高影响阈值，默认值 $w_{w_{hi}}$
+- $w_{high\_impact}$：高影响阈值（不展示真实数值）
 
 **参数解释**：
 - $w_{high\_impact}$：高影响阈值，控制什么是高影响事件
@@ -319,7 +296,7 @@ $$
 $$
 
 其中：
-- $w_{low\_impact}$：低影响阈值，默认值 $w_{w_{li}}$
+- $w_{low\_impact}$：低影响阈值（不展示真实数值）
 
 **参数解释**：
 - $w_{low\_impact}$：低影响阈值，控制什么是低影响事件
@@ -343,7 +320,7 @@ $$
 $$
 
 其中：
-- $\Delta_{max}$：单次更新最大幅度，默认值 $w_{\Delta_{max}}$
+- $\Delta_{max}$：单次更新最大幅度（不展示真实数值）
 
 **参数解释**：
 - $\Delta_{max}$：单次更新最大幅度，控制慢变量更新的速度
@@ -363,7 +340,7 @@ $$
 $$
 
 其中：
-- $w_{extinction\_rate}$：消退速率，默认值 $w_{w_{er}}$
+- $w_{extinction\_rate}$：消退速率（不展示真实数值）
 
 **参数解释**：
 - $w_{extinction\_rate}$：消退速率，控制消退的速度
@@ -416,11 +393,11 @@ importance = w_{rpe} \cdot |RPE| + w_{state} \cdot \text{state\_match} + w_{rece
 $$
 
 其中：
-- $w_{rpe}$：RPE 权重，默认值 $w_{w_r}$
-- $w_{state}$：状态匹配权重，默认值 $w_{w_s}$
-- $w_{recency}$：近期性权重，默认值 $w_{w_{rec}}$
-- $\text{state\_match}$：状态匹配度 $[0,1]$
-- $\text{recency}$：近期性 $[0,1]$
+- $w_{rpe}$：RPE 权重（不展示真实数值）
+- $w_{state}$：状态匹配权重（不展示真实数值）
+- $w_{recency}$：近期性权重（不展示真实数值）
+- $\text{state\_match}$：状态匹配度（归一化到有界区间：$[S_{\min}, S_{\max}]$）
+- $\text{recency}$：近期性（归一化到有界区间：$[S_{\min}, S_{\max}]$）
 
 **参数解释**：
 - $w_{rpe}$：RPE 权重，控制 RPE 对重要性的影响
@@ -451,10 +428,10 @@ $$
 - $N_{category,max}$：类别最大记忆数量
 
 **参数解释**：
-- $N_{fact,max}$：事实记忆最大数量，默认值 $w_{N_{fm}}$
-- $N_{relation,max}$：关系记忆最大数量，默认值 $w_{N_{rm}}$
-- $N_{affect,max}$：情绪记忆最大数量，默认值 $w_{N_{am}}$
-- $N_{style,max}$：风格记忆最大数量，默认值 $w_{N_{sm}}$
+- $N_{fact,max}$：事实记忆最大数量（不展示真实数值）
+- $N_{relation,max}$：关系记忆最大数量（不展示真实数值）
+- $N_{affect,max}$：情绪记忆最大数量（不展示真实数值）
+- $N_{style,max}$：风格记忆最大数量（不展示真实数值）
 
 ---
 
@@ -477,7 +454,7 @@ $$
 其中：
 - $\mathbf{q}$：查询向量
 - $\mathbf{m}$：记忆向量
-- $w_{fact}$：事实记忆权重，默认值 $w_{w_f}$
+- $w_{fact}$：事实记忆权重（不展示真实数值）
 
 **参数解释**：
 - $w_{fact}$：事实记忆权重，控制事实记忆的检索权重
@@ -497,8 +474,8 @@ $$
 
 **参数解释**：
 - $h_{half\_life}$：半衰期，控制记忆衰减速度
-- $w_{relation}$：关系记忆权重，默认值 $w_{w_r}$
-- $w_{affect}$：情绪记忆权重，默认值 $w_{w_a}$
+- $w_{relation}$：关系记忆权重（不展示真实数值）
+- $w_{affect}$：情绪记忆权重（不展示真实数值）
 
 #### 7.2.3 状态匹配检索
 
@@ -510,7 +487,7 @@ $$
 
 其中：
 - $\text{state\_match}$：状态匹配度
-- $w_{style}$：风格记忆权重，默认值 $w_{w_s}$
+- $w_{style}$：风格记忆权重（不展示真实数值）
 
 **参数解释**：
 - $w_{style}$：风格记忆权重，控制风格记忆的检索权重
@@ -526,7 +503,7 @@ score_{biased} = score \cdot (1 + w_{state\_bias} \cdot \text{state\_match})
 $$
 
 其中：
-- $w_{state\_bias}$：状态偏置权重，默认值 $w_{w_{sb}}$
+- $w_{state\_bias}$：状态偏置权重（不展示真实数值）
 
 **参数解释**：
 - $w_{state\_bias}$：状态偏置权重，控制状态对检索的影响
@@ -551,7 +528,7 @@ $$
 
 其中：
 - $\Delta t$：距离上次巩固的时间间隔
-- $\Delta t_{consolidation}$：巩固间隔，默认值 $w_{\Delta t_c}$
+- $\Delta t_{consolidation}$：巩固间隔（不展示真实数值）
 
 **参数解释**：
 - $\Delta t_{consolidation}$：巩固间隔，控制巩固的频率
@@ -566,7 +543,7 @@ $$
 
 其中：
 - $t_{idle}$：闲置时间
-- $t_{idle,threshold}$：闲置阈值，默认值 $w_{t_{it}}$
+- $t_{idle,threshold}$：闲置阈值（不展示真实数值）
 
 **参数解释**：
 - $t_{idle,threshold}$：闲置阈值，控制何时在闲置时触发巩固
@@ -660,3 +637,5 @@ L3 记忆巩固是 HDS 的长期层，负责记录交互日志、分箱记忆存
 ---
 
 **[返回目录](./INDEX.md)** | **[上一篇：L2 神经接口与编译器](./04-neural-interface.md)** | **[下一篇：数学模型详解](./06-mathematical-models.md)**
+
+

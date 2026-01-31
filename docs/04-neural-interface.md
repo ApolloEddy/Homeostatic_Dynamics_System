@@ -1,4 +1,4 @@
-# L2 神经接口与编译器
+﻿# L2 神经接口与编译器
 
 > **Homeostatic Dynamics System** 的第二层——神经接口与编译器
 
@@ -39,20 +39,20 @@ L2 神经接口与编译器遵循以下核心原则：
 
 ### 2.1 设计原理
 
-行为向量是 HDS 与 LLM 之间的稳定中间层，$B \in [0,1]^8$。它将复杂的生理状态映射为可解释的行为特征。
+行为向量是 HDS 与 LLM 之间的稳定中间层，$B \in [B_{\min}, B_{\max}]^{k}$。它将复杂的生理状态映射为可解释的行为特征。
 
 ### 2.2 行为向量维度
 
 | 维度 | 名称 | 含义 | 取值范围 |
 | :--- | :--- | :--- | :--- |
-| $b_1$ | initiative | 主动性 | $[0,1]$ |
-| $b_2$ | warmth | 温暖/亲和 | $[0,1]$ |
-| $b_3$ | patience | 耐心/解释意愿 | $[0,1]$ |
-| $b_4$ | verbosity | 话量 | $[0,1]$ |
-| $b_5$ | directness | 直率/委婉 | $[0,1]$ |
-| $b_6$ | defensiveness | 防御性 | $[0,1]$ |
-| $b_7$ | curiosity | 提问/探索 | $[0,1]$ |
-| $b_8$ | boundary_strength | 边界力度 | $[0,1]$ |
+| $b_1$ | initiative | 主动性 | $[B_{\min}, B_{\max}]$ |
+| $b_2$ | warmth | 温暖/亲和 | $[B_{\min}, B_{\max}]$ |
+| $b_3$ | patience | 耐心/解释意愿 | $[B_{\min}, B_{\max}]$ |
+| $b_4$ | verbosity | 话量 | $[B_{\min}, B_{\max}]$ |
+| $b_5$ | directness | 直率/委婉 | $[B_{\min}, B_{\max}]$ |
+| $b_6$ | defensiveness | 防御性 | $[B_{\min}, B_{\max}]$ |
+| $b_7$ | curiosity | 提问/探索 | $[B_{\min}, B_{\max}]$ |
+| $b_8$ | boundary_strength | 边界力度 | $[B_{\min}, B_{\max}]$ |
 
 ### 2.3 状态到行为向量的映射
 
@@ -74,10 +74,10 @@ $$
 - $b_{2,low}$、$b_{2,high}$：温暖度的上下限
 
 **参数解释**：
-- $b_{1,low}$：主动性下限，默认值 $w_{b_{1l}}$
-- $b_{1,high}$：主动性上限，默认值 $w_{b_{1h}}$
-- $b_{2,low}$：温暖度下限，默认值 $w_{b_{2l}}$
-- $b_{2,high}$：温暖度上限，默认值 $w_{b_{2h}}$
+- $b_{1,low}$：主动性下限（不展示真实数值）
+- $b_{1,high}$：主动性上限（不展示真实数值）
+- $b_{2,low}$：温暖度下限（不展示真实数值）
+- $b_{2,high}$：温暖度上限（不展示真实数值）
 
 **映射逻辑**：
 - $H_{social}$ 低 $\rightarrow$ $b_1 \uparrow$、$b_2 \uparrow$（更主动、更温暖）
@@ -100,10 +100,10 @@ $$
 - $b_{4,low}$、$b_{4,high}$：话量的上下限
 
 **参数解释**：
-- $b_{3,low}$：耐心度下限，默认值 $w_{b_{3l}}$
-- $b_{3,high}$：耐心度上限，默认值 $w_{b_{3h}}$
-- $b_{4,low}$：话量下限，默认值 $w_{b_{4l}}$
-- $b_{4,high}$：话量上限，默认值 $w_{b_{4h}}$
+- $b_{3,low}$：耐心度下限（不展示真实数值）
+- $b_{3,high}$：耐心度上限（不展示真实数值）
+- $b_{4,low}$：话量下限（不展示真实数值）
+- $b_{4,high}$：话量上限（不展示真实数值）
 
 **映射逻辑**：
 - $H_{energy}$ 低 $\rightarrow$ $b_3 \downarrow$、$b_4 \downarrow$（更不耐烦、更简洁）
@@ -126,10 +126,10 @@ $$
 - $b_{6,low}$、$b_{6,high}$：防御性的上下限
 
 **参数解释**：
-- $b_{5,low}$：直率下限，默认值 $w_{b_{5l}}$
-- $b_{5,high}$：直率上限，默认值 $w_{b_{5h}}$
-- $b_{6,low}$：防御性下限，默认值 $w_{b_{6l}}$
-- $b_{6,high}$：防御性上限，默认值 $w_{b_{6h}}$
+- $b_{5,low}$：直率下限（不展示真实数值）
+- $b_{5,high}$：直率上限（不展示真实数值）
+- $b_{6,low}$：防御性下限（不展示真实数值）
+- $b_{6,high}$：防御性上限（不展示真实数值）
 
 **映射逻辑**：
 - $P_{NE}$ 高 $\rightarrow$ $b_5 \uparrow$、$b_6 \uparrow$（更直率、更防御）
@@ -147,8 +147,8 @@ $$
 - $b_{7,low}$、$b_{7,high}$：好奇心的上下限
 
 **参数解释**：
-- $b_{7,low}$：好奇心下限，默认值 $w_{b_{7l}}$
-- $b_{7,high}$：好奇心上限，默认值 $w_{b_{7h}}$
+- $b_{7,low}$：好奇心下限（不展示真实数值）
+- $b_{7,high}$：好奇心上限（不展示真实数值）
 
 **映射逻辑**：
 - $P_{DA}$ 高 $\rightarrow$ $b_7 \uparrow$（更愿意探索、更愿意提问）
@@ -166,8 +166,8 @@ $$
 - $b_{8,low}$、$b_{8,high}$：边界力度的上下限
 
 **参数解释**：
-- $b_{8,low}$：边界力度下限，默认值 $w_{b_{8l}}$
-- $b_{8,high}$：边界力度上限，默认值 $w_{b_{8h}}$
+- $b_{8,low}$：边界力度下限（不展示真实数值）
+- $b_{8,high}$：边界力度上限（不展示真实数值）
 
 **映射逻辑**：
 - $P_{5HT}$ 高 $\rightarrow$ $b_8 \uparrow$（边界更清晰、拒绝更坚决）
@@ -190,7 +190,7 @@ tokens_{injection} \le w_{token\_budget}
 $$
 
 其中：
-- $w_{token\_budget}$：注入 token 预算，默认值 $w_{t_b}$
+- $w_{token\_budget}$：注入 token 预算（不展示真实数值）
 
 **参数解释**：
 - $w_{token\_budget}$：注入 token 预算，控制注入指令的长度
@@ -237,13 +237,13 @@ style: $style\_description$
 | $b_1 > w_{initiative\_high}$ | proactive |
 
 **参数解释**：
-- $w_{verbosity\_low}$：话量低阈值，默认值 $w_{w_{vl}}$
-- $w_{verbosity\_high}$：话量高阈值，默认值 $w_{w_{vh}}$
-- $w_{warmth\_high}$：温暖度高阈值，默认值 $w_{w_{wh}}$
-- $w_{warmth\_low}$：温暖度低阈值，默认值 $w_{w_{wl}}$
-- $w_{defensiveness\_high}$：防御性高阈值，默认值 $w_{w_{dh}}$
-- $w_{patience\_low}$：耐心度低阈值，默认值 $w_{w_{pl}}$
-- $w_{initiative\_high}$：主动性高阈值，默认值 $w_{w_{ih}}$
+- $w_{verbosity\_low}$：话量低阈值（不展示真实数值）
+- $w_{verbosity\_high}$：话量高阈值（不展示真实数值）
+- $w_{warmth\_high}$：温暖度高阈值（不展示真实数值）
+- $w_{warmth\_low}$：温暖度低阈值（不展示真实数值）
+- $w_{defensiveness\_high}$：防御性高阈值（不展示真实数值）
+- $w_{patience\_low}$：耐心度低阈值（不展示真实数值）
+- $w_{initiative\_high}$：主动性高阈值（不展示真实数值）
 
 ---
 
@@ -265,7 +265,7 @@ HDS 将记忆分为四类：
 | **StyleMemory** | 风格记忆 | 在某类状态下的表达模板/语气策略 | 可偏置（用于 few-shot） |
 
 **参数解释**：
-- $w_{relation\_bias}$：关系记忆偏置范围，默认值 $w_{r_b}$
+- $w_{relation\_bias}$：关系记忆偏置范围（不展示真实数值）
 
 ### 4.3 检索偏置计算
 
@@ -293,8 +293,8 @@ $$
 - $age$：记忆年龄
 - $h_{half\_life}$：半衰期
 - $RPE$：奖赏预测误差
-- $w_{state\_bias}$：状态偏置权重，默认值 $w_{w_{sb}}$
-- $w_{rpe}$：RPE 权重，默认值 $w_{w_r}$
+- $w_{state\_bias}$：状态偏置权重（不展示真实数值）
+- $w_{rpe}$：RPE 权重（不展示真实数值）
 
 **参数解释**：
 - $h_{half\_life}$：记忆半衰期，控制记忆衰减速度
@@ -346,7 +346,7 @@ $$
 其中：
 - $w_{DA\_midpoint}$：多巴胺中点值
 - $w_{affect\_base}$：情绪记忆基础权重
-- $w_{affect\_bias}$：情绪记忆偏置范围，默认值 $w_{a_b}$
+- $w_{affect\_bias}$：情绪记忆偏置范围（不展示真实数值）
 
 **参数解释**：
 - $w_{DA\_midpoint}$：多巴胺中点值
@@ -367,7 +367,7 @@ $$
 - $w_{style\_bias}$：风格记忆偏置范围
 
 其中：
-- $w_{style\_bias}$：风格记忆偏置范围，默认值 $w_{s_b}$
+- $w_{style\_bias}$：风格记忆偏置范围（不展示真实数值）
 
 **参数解释**：
 - $w_{style\_bias}$：风格记忆偏置范围，控制风格记忆的偏置程度
@@ -393,12 +393,12 @@ $$
 其中：
 - $T_{min}$：温度下限
 - $T_{max}$：温度上限
-- $T_{base}$：温度基线，默认值 $w_{T_b}$
-- $w_{T,NE}$：NE 对温度的影响权重，默认值 $w_{w_{TN}}$
+- $T_{base}$：温度基线（不展示真实数值）
+- $w_{T,NE}$：NE 对温度的影响权重（不展示真实数值）
 
 **参数解释**：
-- $T_{min}$：温度下限，默认值 $w_{T_{min}}$
-- $T_{max}$：温度上限，默认值 $w_{T_{max}}$
+- $T_{min}$：温度下限（不展示真实数值）
+- $T_{max}$：温度上限（不展示真实数值）
 - $T_{base}$：温度基线，控制默认温度
 - $w_{T,NE}$：NE 对温度的影响权重，控制 NE 对温度的影响程度
 
@@ -427,13 +427,13 @@ $$
 其中：
 - $p_{min}$：Top-P 下限
 - $p_{max}$：Top-P 上限
-- $p_{base}$：Top-P 基线，默认值 $w_{p_b}$
-- $w_{p,NE}$：NE 对 Top-P 的影响权重，默认值 $w_{w_{pN}}$
-- $w_{p,5HT}$：5HT 对 Top-P 的影响权重，默认值 $w_{w_{p5}}$
+- $p_{base}$：Top-P 基线（不展示真实数值）
+- $w_{p,NE}$：NE 对 Top-P 的影响权重（不展示真实数值）
+- $w_{p,5HT}$：5HT 对 Top-P 的影响权重（不展示真实数值）
 
 **参数解释**：
-- $p_{min}$：Top-P 下限，默认值 $w_{p_{min}}$
-- $p_{max}$：Top-P 上限，默认值 $w_{p_{max}}$
+- $p_{min}$：Top-P 下限（不展示真实数值）
+- $p_{max}$：Top-P 上限（不展示真实数值）
 - $p_{base}$：Top-P 基线，控制默认 Top-P
 - $w_{p,NE}$：NE 对 Top-P 的影响权重，控制 NE 对 Top-P 的影响程度
 - $w_{p,5HT}$：5HT 对 Top-P 的影响权重，控制 5HT 对 Top-P 的影响程度
@@ -465,7 +465,7 @@ $$
 其中：
 - $tokens_{min}$：最小 Token 数
 - $tokens_{max}$：最大 Token 数
-- $tokens_{base}$：基础 Token 数，默认值 $w_{t_{base}}$
+- $tokens_{base}$：基础 Token 数（不展示真实数值）
 
 #### 5.4.2 能量因子
 
@@ -476,8 +476,8 @@ f_{energy} = w_{f_{e,base}} + w_{f_{e,scale}} \cdot H_{energy}
 $$
 
 其中：
-- $w_{f_{e,base}}$：能量因子基线，默认值 $w_{w_{feb}}$
-- $w_{f_{e,scale}}$：能量因子尺度，默认值 $w_{w_{fes}}$
+- $w_{f_{e,base}}$：能量因子基线（不展示真实数值）
+- $w_{f_{e,scale}}$：能量因子尺度（不展示真实数值）
 
 **参数解释**：
 - $w_{f_{e,base}}$：能量因子基线，控制基础能量因子
@@ -492,8 +492,8 @@ f_{verbosity} = w_{f_{v,base}} + w_{f_{v,scale}} \cdot b_4
 $$
 
 其中：
-- $w_{f_{v,base}}$：话量因子基线，默认值 $w_{w_{fvb}}$
-- $w_{f_{v,scale}}$：话量因子尺度，默认值 $w_{w_{fvs}}$
+- $w_{f_{v,base}}$：话量因子基线（不展示真实数值）
+- $w_{f_{v,scale}}$：话量因子尺度（不展示真实数值）
 
 **参数解释**：
 - $w_{f_{v,base}}$：话量因子基线，控制基础话量因子
@@ -541,78 +541,89 @@ $$
 
 ---
 
-## 7. 参数默认值
+## 7. 参数符号表（不含真实数值）
 
-### 7.1 行为向量参数
+> [!IMPORTANT]
+> 本节只给出**符号与语义**，不提供任何来自代码/配置的真实参数值。  
+> 代码块与表格规范见 `docs/STYLE.md`。
 
-| 参数 | 默认值 | 说明 |
-| :--- | :--- | :--- |
-| $b_{1,low}$ | $w_{b_{1l}}$ | 主动性下限 |
-| $b_{1,high}$ | $w_{b_{1h}}$ | 主动性上限 |
-| $b_{2,low}$ | $w_{b_{2l}}$ | 温暖度下限 |
-| $b_{2,high}$ | $w_{b_{2h}}$ | 温暖度上限 |
-| $b_{3,low}$ | $w_{b_{3l}}$ | 耐心度下限 |
-| $b_{3,high}$ | $w_{b_{3h}}$ | 耐心度上限 |
-| $b_{4,low}$ | $w_{b_{4l}}$ | 话量下限 |
-| $b_{4,high}$ | $w_{b_{4h}}$ | 话量上限 |
-| $b_{5,low}$ | $w_{b_{5l}}$ | 直率下限 |
-| $b_{5,high}$ | $w_{b_{5h}}$ | 直率上限 |
-| $b_{6,low}$ | $w_{b_{6l}}$ | 防御性下限 |
-| $b_{6,high}$ | $w_{b_{6h}}$ | 防御性上限 |
-| $b_{7,low}$ | $w_{b_{7l}}$ | 好奇心下限 |
-| $b_{7,high}$ | $w_{b_{7h}}$ | 好奇心上限 |
-| $b_{8,low}$ | $w_{b_{8l}}$ | 边界力度下限 |
-| $b_{8,high}$ | $w_{b_{8h}}$ | 边界力度上限 |
+### 7.1 行为向量边界（BehaviorVector）
 
-### 7.2 注入参数
+> [!NOTE]
+> 为提升可读性，这里使用“语义化下标”而不是 `$w_{...}$` 形式的占位符。
 
-| 参数 | 默认值 | 说明 |
-| :--- | :--- | :--- |
-| $w_{token\_budget}$ | $w_{t_b}$ | 注入 token 预算 |
+<table>
+  <tr>
+    <td width="50%">
+      <table>
+        <tr><th>符号</th><th>含义与约束</th></tr>
+        <tr><td>\(b_{\mathrm{initiative},\min}\)</td><td>主动性下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{initiative},\max}\)</td><td>主动性上界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{warmth},\min}\)</td><td>温暖度下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{warmth},\max}\)</td><td>温暖度上界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{patience},\min}\)</td><td>耐心下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{patience},\max}\)</td><td>耐心上界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{verbosity},\min}\)</td><td>话量下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{verbosity},\max}\)</td><td>话量上界（有界）</td></tr>
+      </table>
+    </td>
+    <td width="50%">
+      <table>
+        <tr><th>符号</th><th>含义与约束</th></tr>
+        <tr><td>\(b_{\mathrm{directness},\min}\)</td><td>直率下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{directness},\max}\)</td><td>直率上界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{defensiveness},\min}\)</td><td>防御性下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{defensiveness},\max}\)</td><td>防御性上界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{curiosity},\min}\)</td><td>好奇心下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{curiosity},\max}\)</td><td>好奇心上界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{boundary},\min}\)</td><td>边界强度下界（有界）</td></tr>
+        <tr><td>\(b_{\mathrm{boundary},\max}\)</td><td>边界强度上界（有界）</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
-### 7.3 检索偏置参数
+### 7.2 注入预算（Prompt Injection Budget）
 
-| 参数 | 默认值 | 说明 |
-| :--- | :--- | :--- |
-| $w_{relation\_bias}$ | $w_{r_b}$ | 关系记忆偏置范围 |
-| $w_{affect\_bias}$ | $w_{a_b}$ | 情绪记忆偏置范围 |
-| $w_{style\_bias}$ | $w_{s_b}$ | 风格记忆偏置范围 |
-| $h_{half\_life}$ | $w_{h_{hl}}$ | 记忆半衰期 |
-| $w_{state\_bias}$ | $w_{w_{sb}}$ | 状态偏置权重 |
-| $w_{rpe}$ | $w_{w_r}$ | RPE 权重 |
+| 符号 | 含义与约束 |
+| :--- | :--- |
+| \(B_{\mathrm{inject}}\) | 注入预算（长度/Token 预算，以符号表示上界与策略） |
 
-### 7.4 采样参数
+### 7.3 检索偏置（Retrieval Bias）
 
-| 参数 | 默认值 | 说明 |
-| :--- | :--- | :--- |
-| $T_{min}$ | $w_{T_{min}}$ | 温度下限 |
-| $T_{max}$ | $w_{T_{max}}$ | 温度上限 |
-| $T_{base}$ | $w_{T_b}$ | 温度基线 |
-| $w_{T,NE}$ | $w_{w_{TN}}$ | NE 对温度的影响权重 |
-| $p_{min}$ | $w_{p_{min}}$ | Top-P 下限 |
-| $p_{max}$ | $w_{p_{max}}$ | Top-P 上限 |
-| $p_{base}$ | $w_{p_b}$ | Top-P 基线 |
-| $w_{p,NE}$ | $w_{w_{pN}}$ | NE 对 Top-P 的影响权重 |
-| $w_{p,5HT}$ | $w_{w_{p5}}$ | 5HT 对 Top-P 的影响权重 |
-| $tokens_{min}$ | $w_{t_{min}}$ | 最小 Token 数 |
-| $tokens_{max}$ | $w_{t_{max}}$ | 最大 Token 数 |
-| $tokens_{base}$ | $w_{t_{base}}$ | 基础 Token 数 |
-| $w_{f_{e,base}}$ | $w_{w_{feb}}$ | 能量因子基线 |
-| $w_{f_{e,scale}}$ | $w_{w_{fes}}$ | 能量因子尺度 |
-| $w_{f_{v,base}}$ | $w_{w_{fvb}}$ | 话量因子基线 |
-| $w_{f_{v,scale}}$ | $w_{w_{fvs}}$ | 话量因子尺度 |
+| 符号 | 含义与约束 |
+| :--- | :--- |
+| \(w_{\mathrm{fact}}\) | 事实记忆权重（建议为常量或极窄范围） |
+| \(w_{\mathrm{relation}}\) | 关系记忆权重（有界偏置） |
+| \(w_{\mathrm{affect}}\) | 情绪记忆权重（有界偏置） |
+| \(w_{\mathrm{style}}\) | 风格记忆权重（有界偏置） |
+| \(h_{\mathrm{half}}\) | 时间衰减的半衰期/时间尺度（符号化） |
+| \(w_{\mathrm{state}}\) | 状态匹配权重（符号化） |
+| \(w_{\mathrm{rpe}}\) | 显著性/RPE 权重（符号化且必须有界） |
 
-### 7.5 风格描述阈值参数
+### 7.4 采样映射边界（Sampling Bounds）
 
-| 参数 | 默认值 | 说明 |
-| :--- | :--- | :--- |
-| $w_{verbosity\_low}$ | $w_{w_{vl}}$ | 话量低阈值 |
-| $w_{verbosity\_high}$ | $w_{w_{vh}}$ | 话量高阈值 |
-| $w_{warmth\_high}$ | $w_{w_{wh}}$ | 温暖度高阈值 |
-| $w_{warmth\_low}$ | $w_{w_{wl}}$ | 温暖度低阈值 |
-| $w_{defensiveness\_high}$ | $w_{w_{dh}}$ | 防御性高阈值 |
-| $w_{patience\_low}$ | $w_{w_{pl}}$ | 耐心度低阈值 |
-| $w_{initiative\_high}$ | $w_{w_{ih}}$ | 主动性高阈值 |
+| 符号 | 含义与约束 |
+| :--- | :--- |
+| \(T_{\min}, T_{\max}\) | temperature 上下界（有界） |
+| \(P_{\min}, P_{\max}\) | top-p 上下界（有界） |
+| \(M_{\min}, M_{\max}\) | max tokens 上下界（有界） |
+| \(\alpha_T,\beta_{T,NE}\) | NE 到 temperature 的线性映射系数（符号化） |
+| \(\alpha_P,\beta_{P,NE},\beta_{P,5HT}\) | NE/5HT 到 top-p 的映射系数（符号化） |
+| \(\alpha_M,\beta_{M,E},\beta_{M,V}\) | 能量/话量到长度预算的映射系数（符号化） |
+
+### 7.5 风格阈值（离散风格标签）
+
+> [!NOTE]
+> 风格标签属于有限离散结果，允许直接列出全集（不涉及数值泄露）。
+
+| 标签字段 | 允许取值（示例） |
+| :--- | :--- |
+| `verbosityStyle` | `concise` \| `expanded` \| `balanced` |
+| `toneStyle` | `warm` \| `cool` \| `neutral` |
+| `guardStyle` | `guarded` \| `open` |
+| `patienceStyle` | `low_patience` \| `normal` |
+| `initiativeStyle` | `proactive` \| `reactive` |
 
 ---
 
@@ -641,3 +652,5 @@ L2 神经接口与编译器是 HDS 的核心层，负责将生理状态翻译为
 ---
 
 **[返回目录](./INDEX.md)** | **[上一篇：L1 数字生理循环](./03-physiological-loop.md)** | **[下一篇：L3 记忆巩固](./05-consolidation.md)**
+
+
