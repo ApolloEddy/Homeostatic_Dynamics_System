@@ -1,4 +1,4 @@
-# 附录 · 参数符号表（不含真实数值）
+﻿# 附录 · 参数符号表（不含真实数值）
 
 **[返回目录](../INDEX.md)** · **[写作规范](../STYLE.md)** · **[返回主页](../../README.md)**
 
@@ -117,5 +117,6 @@
 
 ---
 
-**[返回目录](../INDEX.md)** · **[上一篇：数学模型详解](../06-mathematical-models.md)** · **[下一篇：实现指南](../07-implementation-guide.md)**
+**[返回目录](../INDEX.md)** · **[上一篇：数学模型详解](../06-mathematical-models/README.md)** · **[下一篇：实现指南](../07-implementation-guide/README.md)**
+
 

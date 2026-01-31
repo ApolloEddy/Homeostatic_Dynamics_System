@@ -1,4 +1,4 @@
-# Homeostatic Dynamics System (HDS)
+﻿# Homeostatic Dynamics System (HDS)
 
 > **生存稳态动力学系统** —— 基于生物神经动力学的数字人格稳定性框架
 
@@ -27,20 +27,20 @@ HDS 的核心理念是将人工智能系统视为一个具有"虚拟生理—认
 
 - [完整文档目录](docs/INDEX.md) - 查看所有技术文档
 - [写作规范（参数脱敏与版式）](docs/STYLE.md) - 白皮书化排版与脱敏规则
-- [引言与理论基础](docs/01-introduction.md) - 了解 HDS 的科学背景
-- [系统架构总览](docs/02-system-architecture.md) - 掌握整体设计
+- [引言与理论基础](docs/01-introduction/README.md) - 了解 HDS 的科学背景
+- [系统架构总览](docs/02-system-architecture/README.md) - 掌握整体设计
 
 ### 核心模块
 
-- [L1 数字生理循环](docs/03-physiological-loop.md) - 内驱力与神经递质系统
-- [L2 神经接口与编译器](docs/04-neural-interface.md) - 行为向量与动态控制
-- [L3 记忆巩固](docs/05-consolidation.md) - 分箱记忆与离线巩固
+- [L1 数字生理循环](docs/03-physiological-loop/README.md) - 内驱力与神经递质系统
+- [L2 神经接口与编译器](docs/04-neural-interface/README.md) - 行为向量与动态控制
+- [L3 记忆巩固](docs/05-consolidation/README.md) - 分箱记忆与离线巩固
 
 ### 深入学习
 
-- [数学模型详解](docs/06-mathematical-models.md) - OU 过程与稳定性分析
-- [实现指南](docs/07-implementation-guide.md) - API 设计与配置说明
-- [应用场景](docs/08-applications.md) - 对话系统与人格控制
+- [数学模型详解](docs/06-mathematical-models/README.md) - OU 过程与稳定性分析
+- [实现指南](docs/07-implementation-guide/README.md) - API 设计与配置说明
+- [应用场景](docs/08-applications/README.md) - 对话系统与人格控制
 
 ---
 
@@ -94,9 +94,9 @@ $$
 
 **核心神经递质**：
 
-- **$P_{DA}$（Dopamine）**：奖赏预测误差（RPE）驱动的动机/学习率调制
-- **$P_{NE}$（Norepinephrine）**：唤醒/压力与注意力集中
-- **$P_{5HT}$（Serotonin）**：抑制/控制与长期规划能力
+- **\(N_{\mathrm{DA}}\)（Dopamine）**：奖赏预测误差（RPE）驱动的动机/学习率调制
+- **\(N_{\mathrm{NE}}\)（Norepinephrine）**：唤醒/压力与注意力集中
+- **\(N_{\mathrm{5HT}}\)（Serotonin）**：抑制/控制与长期规划能力
 
 ### 行为向量（Behavior Vector）
 
@@ -252,4 +252,5 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ---
 
-**[返回目录](docs/INDEX.md)** | **[开始阅读](docs/01-introduction.md)**
+**[返回目录](docs/INDEX.md)** | **[开始阅读](docs/01-introduction/README.md)**
+
