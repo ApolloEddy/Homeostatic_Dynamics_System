@@ -1,4 +1,4 @@
-# HDS 技术文档目录
+﻿# HDS 技术文档目录
 
 > **Homeostatic Dynamics System** 完整技术文档索引
 
@@ -7,6 +7,7 @@
 ## 文档导航
 
 - **[返回主页](../README.md)** - 项目概述与快速开始
+- **[写作规范](./STYLE.md)** - 参数脱敏与白皮书版式规范
 - **[文档总览](#文档总览)** - 查看所有章节概览
 - **[阅读顺序建议](#阅读顺序建议)** - 推荐的学习路径
 
@@ -18,24 +19,30 @@
 
 | 章节 | 文档 | 内容概要 | 阅读时间 |
 | :--- | :--- | :--- | :--- |
-| 01 | [引言与理论基础](./01-introduction.md) | HDS 的科学背景、神经学、心理学、社会行为学基础 | 20 分钟 |
-| 02 | [系统架构总览](./02-system-architecture.md) | 三层架构设计、数据流、模块职责划分 | 15 分钟 |
+| 01 | [引言与理论基础](./01-introduction/README.md) | HDS 的科学背景、神经学、心理学、社会行为学基础 | 20 分钟 |
+| 02 | [系统架构总览](./02-system-architecture/README.md) | 三层架构设计、数据流、模块职责划分 | 15 分钟 |
 
 ### 第二部分：核心模块
 
 | 章节 | 文档 | 内容概要 | 阅读时间 |
 | :--- | :--- | :--- | :--- |
-| 03 | [L1 数字生理循环](./03-physiological-loop.md) | 内驱力系统、神经递质系统、OU 过程、刺激归一化 | 30 分钟 |
-| 04 | [L2 神经接口与编译器](./04-neural-interface.md) | 行为向量、动态 Prompt 注入、检索偏置、采样映射 | 25 分钟 |
-| 05 | [L3 记忆巩固](./05-consolidation.md) | 分箱记忆、记忆摄入、检索增强、离线巩固 | 25 分钟 |
+| 03 | [L1 数字生理循环](./03-physiological-loop/README.md) | 内驱力系统、神经递质系统、OU 过程、刺激归一化 | 30 分钟 |
+| 04 | [L2 神经接口与编译器](./04-neural-interface/README.md) | 行为向量、动态 Prompt 注入、检索偏置、采样映射 | 25 分钟 |
+| 05 | [L3 记忆巩固](./05-consolidation/README.md) | 分箱记忆、记忆摄入、检索增强、离线巩固 | 25 分钟 |
 
 ### 第三部分：深入技术
 
 | 章节 | 文档 | 内容概要 | 阅读时间 |
 | :--- | :--- | :--- | :--- |
-| 06 | [数学模型详解](./06-mathematical-models.md) | OU 过程推导、状态更新方程、参数映射、稳定性分析 | 35 分钟 |
-| 07 | [实现指南](./07-implementation-guide.md) | API 设计、配置参数、调试监控、性能优化 | 30 分钟 |
-| 08 | [应用场景](./08-applications.md) | 对话系统集成、人格稳定性、可解释性分析、扩展应用 | 20 分钟 |
+| 06 | [数学模型详解](./06-mathematical-models/README.md) | OU 过程推导、状态更新方程、参数映射、稳定性分析 | 35 分钟 |
+| 07 | [实现指南](./07-implementation-guide/README.md) | API 设计、配置参数、调试监控、性能优化 | 30 分钟 |
+| 08 | [应用场景](./08-applications/README.md) | 对话系统集成、人格稳定性、可解释性分析、扩展应用 | 20 分钟 |
+
+### 附录
+
+| 文档 | 内容概要 |
+| :--- | :--- |
+| [参数符号表（不含真实数值）](./appendix/parameter-symbols.md) | 全局符号、阈值命名与约束（集中管理） |
 
 ---
 
@@ -45,199 +52,43 @@
 
 适合希望快速了解 HDS 核心概念的读者：
 
-1. [引言与理论基础](./01-introduction.md) - 理解 HDS 的科学背景
-2. [系统架构总览](./02-system-architecture.md) - 掌握整体设计
-3. [L1 数字生理循环](./03-physiological-loop.md) - 了解核心机制
-4. [应用场景](./08-applications.md) - 了解实际应用
+1. [引言与理论基础](./01-introduction/README.md) - 理解 HDS 的科学背景
+2. [系统架构总览](./02-system-architecture/README.md) - 掌握整体设计
+3. [L1 数字生理循环](./03-physiological-loop/README.md) - 了解核心机制
+4. [应用场景](./08-applications/README.md) - 了解实际应用
 
 ### 系统学习路径（约 3 小时）
 
 适合希望深入理解 HDS 设计与实现的开发者：
 
-1. [引言与理论基础](./01-introduction.md)
-2. [系统架构总览](./02-system-architecture.md)
-3. [L1 数字生理循环](./03-physiological-loop.md)
-4. [L2 神经接口与编译器](./04-neural-interface.md)
-5. [L3 记忆巩固](./05-consolidation.md)
-6. [实现指南](./07-implementation-guide.md)
-7. [应用场景](./08-applications.md)
+1. [引言与理论基础](./01-introduction/README.md)
+2. [系统架构总览](./02-system-architecture/README.md)
+3. [L1 数字生理循环](./03-physiological-loop/README.md)
+4. [L2 神经接口与编译器](./04-neural-interface/README.md)
+5. [L3 记忆巩固](./05-consolidation/README.md)
+6. [实现指南](./07-implementation-guide/README.md)
+7. [应用场景](./08-applications/README.md)
 
 ### 研究者路径（约 4 小时）
 
 适合希望深入研究 HDS 理论基础和数学模型的研究者：
 
-1. [引言与理论基础](./01-introduction.md)
-2. [系统架构总览](./02-system-architecture.md)
-3. [L1 数字生理循环](./03-physiological-loop.md)
-4. [L2 神经接口与编译器](./04-neural-interface.md)
-5. [L3 记忆巩固](./05-consolidation.md)
-6. [数学模型详解](./06-mathematical-models.md)
-7. [实现指南](./07-implementation-guide.md)
-8. [应用场景](./08-applications.md)
-
----
-
-## 章节导航
-
-### 01. 引言与理论基础
-
-**[开始阅读](./01-introduction.md)**
-
-本章节介绍 HDS 的科学背景，从神经学、心理学、社会行为学、数学和计算机科学等多个角度阐述 HDS 的理论基础。
-
-**核心内容**：
-- HDS 的设计动机与目标
-- 神经学基础：多巴胺、去甲肾上腺素、血清素
-- 心理学基础：内驱力理论、情绪调节
-- 社会行为学基础：社交互动、边界设定
-- 数学基础：随机微分方程、稳定性理论
-
-**上一篇**：[返回主页](../README.md) | **下一篇**：[系统架构总览](./02-system-architecture.md)
-
----
-
-### 02. 系统架构总览
-
-**[开始阅读](./02-system-architecture.md)**
-
-本章节介绍 HDS 的整体架构设计，包括三层架构、数据流、模块职责划分和系统架构图。
-
-**核心内容**：
-- 三层架构设计（L1/L2/L3）
-- 数据流与闭环机制
-- 模块职责划分
-- 系统架构图（Mermaid）
-- 接口化设计
-
-**上一篇**：[引言与理论基础](./01-introduction.md) | **下一篇**：[L1 数字生理循环](./03-physiological-loop.md)
-
----
-
-### 03. L1 数字生理循环
-
-**[开始阅读](./03-physiological-loop.md)**
-
-本章节详细介绍 HDS 的第一层——数字生理循环，包括内驱力系统、神经递质系统和刺激输入处理。
-
-**核心内容**：
-- 内驱力系统（Homeostasis）
-- 神经递质系统（Neuromodulators）
-- OU 随机过程数学模型
-- 刺激输入与归一化
-- 任务消耗模型
-
-**上一篇**：[系统架构总览](./02-system-architecture.md) | **下一篇**：[L2 神经接口与编译器](./04-neural-interface.md)
-
----
-
-### 04. L2 神经接口与编译器
-
-**[开始阅读](./04-neural-interface.md)**
-
-本章节介绍 HDS 的第二层——神经接口与编译器，包括行为向量设计、动态 Prompt 注入、检索偏置和采样参数映射。
-
-**核心内容**：
-- 行为向量（Behavior Vector）
-- 动态系统指令编译
-- 检索与注意力偏置
-- 采样超参映射
-- 风格编译器
-
-**上一篇**：[L1 数字生理循环](./03-physiological-loop.md) | **下一篇**：[L3 记忆巩固](./05-consolidation.md)
-
----
-
-### 05. L3 记忆巩固
-
-**[开始阅读](./05-consolidation.md)**
-
-本章节介绍 HDS 的第三层——长时序人格固化，包括分箱记忆系统、记忆摄入、检索增强和离线巩固机制。
-
-**核心内容**：
-- 日志结构（State-Aware Logging）
-- 记忆分箱（Binned Memory）
-- 动态 Few-shot 注入
-- 离线巩固（Sleep Consolidation）
-- 慢变量更新
-
-**上一篇**：[L2 神经接口与编译器](./04-neural-interface.md) | **下一篇**：[数学模型详解](./06-mathematical-models.md)
-
----
-
-### 06. 数学模型详解
-
-**[开始阅读](./06-mathematical-models.md)**
-
-本章节深入讲解 HDS 的数学模型，包括 OU 过程推导、状态更新方程、参数映射公式和稳定性分析。
-
-**核心内容**：
-- Ornstein-Uhlenbeck 过程推导
-- 状态更新方程
-- 参数映射公式
-- 稳定性分析
-- 参数优化策略
-
-**上一篇**：[L3 记忆巩固](./05-consolidation.md) | **下一篇**：[实现指南](./07-implementation-guide.md)
-
----
-
-### 07. 实现指南
-
-**[开始阅读](./07-implementation-guide.md)**
-
-本章节提供 HDS 的实现指南，包括 API 接口设计、配置参数说明、调试监控和性能优化。
-
-**核心内容**：
-- API 接口设计
-- 配置参数说明
-- 调试与监控
-- 性能优化
-- 常见问题解答
-
-**上一篇**：[数学模型详解](./06-mathematical-models.md) | **下一篇**：[应用场景](./08-applications.md)
-
----
-
-### 08. 应用场景
-
-**[开始阅读](./08-applications.md)**
-
-本章节介绍 HDS 的实际应用场景，包括对话系统集成、人格稳定性控制、可解释性分析和扩展应用。
-
-**核心内容**：
-- 对话系统集成
-- 人格稳定性控制
-- 可解释性分析
-- 扩展应用
-- 案例研究
-
-**上一篇**：[实现指南](./07-implementation-guide.md) | **下一篇**：[返回主页](../README.md)
+1. [引言与理论基础](./01-introduction/README.md)
+2. [系统架构总览](./02-system-architecture/README.md)
+3. [L1 数字生理循环](./03-physiological-loop/README.md)
+4. [L2 神经接口与编译器](./04-neural-interface/README.md)
+5. [L3 记忆巩固](./05-consolidation/README.md)
+6. [数学模型详解](./06-mathematical-models/README.md)
+7. [实现指南](./07-implementation-guide/README.md)
+8. [应用场景](./08-applications/README.md)
 
 ---
 
 ## 附录
 
-### 术语表
-
-| 术语 | 英文 | 解释 |
-| :--- | :--- | :--- |
-| 内驱力 | Homeostasis | 生物体维持生存的基本需求驱动 |
-| 神经递质 | Neuromodulator | 调节神经信号传递的化学物质 |
-| 行为向量 | Behavior Vector | 描述行为特征的数值向量 |
-| OU 过程 | Ornstein-Uhlenbeck Process | 具有均值回归特性的随机过程 |
-| 奖赏预测误差 | Reward Prediction Error (RPE) | 实际奖赏与预期奖赏的差值 |
-| 记忆巩固 | Memory Consolidation | 短期记忆转化为长期记忆的过程 |
-| 分箱记忆 | Binned Memory | 按类别分组的记忆存储系统 |
-
-### 参考文献
-
-本系统的设计灵感来源于以下领域的理论研究：
-
-- **神经科学**：多巴胺奖赏系统、去甲肾上腺素唤醒理论、血清素情绪调节
-- **心理学**：内驱力理论、情绪调节理论、人格稳定性研究
-- **社会行为学**：社交互动理论、边界设定理论、关系维护机制
-- **数学**：随机微分方程、稳定性理论、参数优化
-- **计算机科学**：系统架构设计、API 设计、数据结构
+- [写作规范（参数脱敏与版式）](./STYLE.md)
+- [参数符号表（不含真实数值）](./appendix/parameter-symbols.md)
+- [术语表](./appendix/glossary.md)
 
 ---
 
@@ -247,14 +98,5 @@
 
 ---
 
-## 贡献
+**[返回主页](../README.md)** | **[开始阅读](./01-introduction/README.md)**
 
-欢迎贡献文档改进建议和错误修正。请通过以下方式参与：
-
-- 提交 Issue 报告问题
-- 提交 Pull Request 改进文档
-- 分享您的使用经验和案例
-
----
-
-**[返回主页](../README.md)** | **[开始阅读](./01-introduction.md)**
